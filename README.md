@@ -5,9 +5,12 @@ This repository contains design files (soon), control code, and analysis scripts
 ---
 ## 📦 Dependencies
 The following python packages are required:
+- `sympy`
 - `scipy`
 - `numba`
 - `plotly`
+ - `kaleido`
+- `imageio`
 
 install them with
 ```bash
