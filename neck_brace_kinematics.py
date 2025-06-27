@@ -188,3 +188,27 @@ def inverse_kinematics(alpha_val, beta_val, gamma_val, z_val, initial_guess=np.a
     
     soln = fsolve(constraints, initial_guess, xtol=xtol)
     return soln
+
+
+### Jacobian Calculation
+## 12 constraint equations
+f = Matrix.vstack(
+    E1_ee - E1_chain, 
+    E2_ee - E2_chain, 
+    E3_ee - E3_chain, 
+    Matrix([(Q1 - A).dot(Q1 - A) - p1**2]),
+    Matrix([(Q2 - A).dot(Q2 - A) - p2**2]),
+    Matrix([(Q3 - A).dot(Q3 - A) - p3**2])
+)
+
+q = Matrix([d1,d2,d3,theta2, theta1,  gamma1_1, gamma2_1, gamma1_2, gamma2_2, theta3, gamma1_3, gamma2_3, alpha, beta, gamma, z])
+
+full_J = f.jacobian(q)
+
+C = full_J.subs(geometric_params)[:, :4]
+C_star = full_J.subs(geometric_params)[:, 4:]
+
+# Lambdify C and C_star for numerical evaluation
+C_func = lambdify(q, C, modules='numpy')
+C_star_func = lambdify(q, C_star, modules='numpy')
+#####

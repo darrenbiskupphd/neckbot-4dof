@@ -17,6 +17,7 @@ def visualize_robot(
     geometric_params=None,
     show_figure=False,
     save_html=None,
+    showlegend=False,
     width=800,
     height=600,
     x_range=(-.210, .210),
@@ -120,19 +121,19 @@ def visualize_robot(
     ))
     fig.add_trace(go.Scatter3d(
         x=[E1_ee_val[0]], y=[E1_ee_val[1]], z=[E1_ee_val[2]],
-        mode='markers', marker=dict(color='red', size=5), name='E1'
+        mode='markers', marker=dict(color='red', size=5), name='E1',
     ))
     fig.add_trace(go.Scatter3d(
         x=[E2_ee_val[0]], y=[E2_ee_val[1]], z=[E2_ee_val[2]],
-        mode='markers', marker=dict(color='green', size=5), name='E2'
+        mode='markers', marker=dict(color='green', size=5), name='E2',
     ))
     fig.add_trace(go.Scatter3d(
         x=[E3_ee_val[0]], y=[E3_ee_val[1]], z=[E3_ee_val[2]],
-        mode='markers', marker=dict(color='blue', size=5), name='E3'
+        mode='markers', marker=dict(color='blue', size=5), name='E3',
     ))
     fig.add_trace(go.Scatter3d(
         x=[E_o_val[0]], y=[E_o_val[1]], z=[E_o_val[2]],
-        mode='markers', marker=dict(color='orange', size=5), name='E_o'
+        mode='markers', marker=dict(color='orange', size=5), name='E_o',
     ))
 
     # Connect the points to form the prismoid
@@ -188,7 +189,8 @@ def visualize_robot(
         ),
         title=title,
         width=width,
-        height=height
+        height=height,
+        showlegend=showlegend,
     )
 
     # Show the figure if requested
