@@ -280,7 +280,7 @@ fk_x0 = jnp.array([
 ])
 
 @jax.jit
-def inverse_kinematics(ee_params, x0=ik_x0, learning_rate=3e-1, max_iter=75, tol=1e-6):
+def inverse_kinematics(ee_params, x0=ik_x0, learning_rate=3e-2, tol=1e-6):
     """
     Inverse kinematics solver using optax Adam optimizer.
     """
@@ -294,14 +294,14 @@ def inverse_kinematics(ee_params, x0=ik_x0, learning_rate=3e-1, max_iter=75, tol
         params = optax.apply_updates(params, updates)
         return params, opt_state
 
-    for _ in range(max_iter):
+    for _ in range(75):
         params, opt_state = step(params, opt_state)
 
     loss = objective(ee_params, params[:4], params[4:])
     return params, loss
 
 @jax.jit
-def forward_kinematics(joint_params, x0=fk_x0, learning_rate=3e-2, max_iter=75, tol=1e-6):
+def forward_kinematics(joint_params, x0=fk_x0, learning_rate=3e-2, tol=1e-6):
     """
     Forward kinematics solver using optax Adam optimizer.
     """
@@ -315,7 +315,7 @@ def forward_kinematics(joint_params, x0=fk_x0, learning_rate=3e-2, max_iter=75, 
         params = optax.apply_updates(params, updates)
         return params, opt_state
 
-    for _ in range(max_iter):
+    for _ in range(75):
         params, opt_state = step(params, opt_state)
 
     loss = objective(params[:4], joint_params, params[4:])
