@@ -13,7 +13,7 @@ def visualize_robot(
     showlegend=False,
     width=800,
     height=600,
-    x_range=(-.350, .150),
+    x_range=(-.300, .200),
     y_range=(-.250, .250),
     z_range=(-.010, .510),
     title='3D Visualization of Chains and End-Effector',
